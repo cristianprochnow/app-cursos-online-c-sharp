@@ -54,6 +54,65 @@ namespace CursosOnline.Test
              */
             curso.ToExpectedObject().ShouldMatch(novoCurso);
         }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void CursoNomeVazio(string nome)
+        {
+            // Arrange
+            var curso = new
+            {
+                Nome = "Banco de Dados",
+                CargaHoraria = (double) 40,
+                Publico = "Secondarista",
+                Valor = (double) 120
+            };
+
+            /*
+             `string.Empty` é uma alternativa para passar as aspas vazias também.
+             É uma forma mais limpa na sintaxe, visto que as aspas vazias pode
+             acabar ficando confusa em certos casos.
+             */
+
+            // Act e Assert ao mesmo tempo.
+            /**
+             * Esse comando vai ficar apenas sinalizando as exceções que
+             * forem do tipo `ArgumentException`.
+             */
+            /**
+             * As arrow function do C# é igualzin às funções anônimas do JavaScript
+             * (iguais mesma).
+             */
+            Assert.Throws<ArgumentException>(
+                () => new Curso(nome, curso.CargaHoraria, curso.Publico, curso.Valor)
+            );
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-1)]
+        public void CursoCargaHorariaInvalida(int cargaHoraria)
+        {
+            var curso = new
+            {
+                Nome = "Banco de Dados",
+                CargaHoraria = (double)40,
+                Publico = "Secondarista",
+                Valor = (double)120
+            };
+
+            /**
+             * É também possível verificar a mensagem de erro devolvida
+             * em cada exception. Com isso, por exemplo, estou obrigando
+             * o programador a colocar a mensagem correta que eu quero.
+             */
+            string mensagemErro = Assert.Throws<ArgumentException>(
+                () => new Curso(curso.Nome, cargaHoraria, curso.Publico, curso.Valor)
+            ).Message;
+
+            Assert.Equal("Valor inválido para Carga Horária!", mensagemErro);
+        }
     }
 
     public class Curso
@@ -67,6 +126,15 @@ namespace CursosOnline.Test
 
         public Curso(string name, double cargaHoraria, string publico, double valor)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Preenchimento do nome do curso é obrigatório!");
+            }
+            if (cargaHoraria <= 0)
+            {
+                throw new ArgumentException("Valor inválido para Carga Horária!");
+            }
+
             this.Name = name;
             this.CargaHoraria = cargaHoraria;
             this.Publico = publico;
