@@ -1,9 +1,39 @@
+using CursosOnline.Test._Util;
 using ExpectedObjects;
 
 namespace CursosOnline.Test
 {
     public class CursoTeste
     {
+        private string _nome;
+        private double _cargaHoraria;
+        private string _publico;
+        private double _valor;
+
+        /**
+         * Numa classe normal, o construtor sempre é chamado apenas uma vez, no momento
+         * que instancia a classe.
+         * 
+         * Na classe de teste, o construtor é chamado em todo início da execução
+         * de testes. Então, a cada teste que for executado, o construtor é chamado.
+         */
+        /*
+        public CursoTeste(string nome, double cargaHoraria, string publico, double valor)
+        {
+            _nome = nome;
+            _cargaHoraria = cargaHoraria;
+            _publico = publico;
+            _valor = valor;
+        }
+        */
+        public CursoTeste()
+        {
+            _nome = "Teste de Software";
+            _cargaHoraria = 80.00;
+            _publico = "Professor";
+            _valor = 150.00;
+        }
+
         /**
          * Criar Curso
          * 
@@ -27,8 +57,8 @@ namespace CursosOnline.Test
              */
             var curso = new
             {
-                Name = "Contabilidade Básica",
-                Publico = "Emprendedor",
+                Name = _nome,
+                Publico = _publico,
                 /**
                  * Usada a conversão de `double`, pois
                  * já que não há identificação de tipo,
@@ -38,8 +68,8 @@ namespace CursosOnline.Test
                  * então temos que identificar o tipo 
                  * específico.
                  */
-                CargaHoraria = (double) 30,
-                Valor = (double) 45
+                CargaHoraria = _cargaHoraria,
+                Valor = _valor
             };
 
             Curso novoCurso = new Curso(curso.Name, curso.CargaHoraria, curso.Publico, curso.Valor);
@@ -60,15 +90,6 @@ namespace CursosOnline.Test
         [InlineData("")]
         public void CursoNomeVazio(string nome)
         {
-            // Arrange
-            var curso = new
-            {
-                Nome = "Banco de Dados",
-                CargaHoraria = (double) 40,
-                Publico = "Secondarista",
-                Valor = (double) 120
-            };
-
             /*
              `string.Empty` é uma alternativa para passar as aspas vazias também.
              É uma forma mais limpa na sintaxe, visto que as aspas vazias pode
@@ -85,7 +106,7 @@ namespace CursosOnline.Test
              * (iguais mesma).
              */
             Assert.Throws<ArgumentException>(
-                () => new Curso(nome, curso.CargaHoraria, curso.Publico, curso.Valor)
+                () => new Curso(nome, _cargaHoraria, _publico, _valor)
             );
         }
 
@@ -94,24 +115,20 @@ namespace CursosOnline.Test
         [InlineData(-1)]
         public void CursoCargaHorariaInvalida(int cargaHoraria)
         {
-            var curso = new
-            {
-                Nome = "Banco de Dados",
-                CargaHoraria = (double)40,
-                Publico = "Secondarista",
-                Valor = (double)120
-            };
-
             /**
              * É também possível verificar a mensagem de erro devolvida
              * em cada exception. Com isso, por exemplo, estou obrigando
              * o programador a colocar a mensagem correta que eu quero.
              */
-            string mensagemErro = Assert.Throws<ArgumentException>(
-                () => new Curso(curso.Nome, cargaHoraria, curso.Publico, curso.Valor)
-            ).Message;
-
-            Assert.Equal("Valor inválido para Carga Horária!", mensagemErro);
+            Assert
+                .Throws<ArgumentException>(() => new Curso(_nome, cargaHoraria, _publico, _valor))
+                /**
+                 * `ComMensagem` recebe como primeiro parãmetro a ligação com a classe
+                 * de exception, mas já que ele está usando o método encadeado, então o parâmetro
+                 * que é a classe pode até ser destacado, já que já é pega por baixo dos panos 
+                 * por causa do encadeamento.
+                 */
+                .ComMensagem("Valor inválido para Carga Horária!");
         }
     }
 
