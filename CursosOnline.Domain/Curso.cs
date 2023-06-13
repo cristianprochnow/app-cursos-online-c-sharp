@@ -2,7 +2,6 @@
 {
     public class Curso
     {
-        // Estes s�o os "campos", que possuem representa��o apenas na classe
         private string name;
         private string descricao;
         private double cargaHoraria;

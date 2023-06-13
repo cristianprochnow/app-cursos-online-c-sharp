@@ -10,7 +10,7 @@ namespace CursosOnline.Test._Builders
 {
     public class CursoBuilder
     {
-        private string _name = "Banco de Dados";
+        private string _nome = "Banco de Dados";
         private string _descricao = "SQL para pessoas iniciantes no assunto.";
         private double _cargaHoraria = 80;
         private string _publico = "Universitário";
@@ -26,12 +26,54 @@ namespace CursosOnline.Test._Builders
         */
         public static CursoBuilder Novo()
         {
-          return new CursoBuilder();
+            return new CursoBuilder();
         }
 
         public Curso Criar()
         {
-          return new Curso(_name, _descricao, _cargaHoraria, _publico, _valor);
+            return new Curso(_nome, _descricao, _cargaHoraria, _publico, _valor);
+        }
+
+        public CursoBuilder ComNome(string nome)
+        {
+            _nome = nome;
+
+            return this;
+        }
+
+        public CursoBuilder ComDescricao(string descricao)
+        {
+            _descricao = descricao;
+
+            return this;
+        }
+
+        public CursoBuilder ComCargaHoraria(double cargaHoraria)
+        {
+            _cargaHoraria = cargaHoraria;
+
+            return this;
+        }
+
+        public CursoBuilder ComPublico(string publico)
+        {
+            _publico = publico;
+
+            return this;
+        }
+
+        public CursoBuilder ComValor(double valor)
+        {
+            _valor = valor;
+
+            return this;
+        }
+
+        public CursoBuilder ComValorDesconto(double valorDesconto)
+        {
+            _valorDesconto = valorDesconto;
+
+            return this;
         }
     }
 }
