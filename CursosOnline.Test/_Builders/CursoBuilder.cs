@@ -16,6 +16,7 @@ namespace CursosOnline.Test._Builders
         private string _publico = "Universitário";
         private double _valor = 150.50;
         private double _valorDesconto = 100;
+        private double _nota = 8;
 
         /*
         Meio que seguindo uma lógica de Singleton, essa função vai reservar
@@ -31,7 +32,7 @@ namespace CursosOnline.Test._Builders
 
         public Curso Criar()
         {
-            return new Curso(_nome, _descricao, _cargaHoraria, _publico, _valor);
+            return new Curso(_nome, _descricao, _cargaHoraria, _publico, _valor, _nota);
         }
 
         public CursoBuilder ComNome(string nome)
@@ -72,6 +73,13 @@ namespace CursosOnline.Test._Builders
         public CursoBuilder ComValorDesconto(double valorDesconto)
         {
             _valorDesconto = valorDesconto;
+
+            return this;
+        }
+
+        public CursoBuilder ComNota(double nota)
+        {
+            _nota = nota;
 
             return this;
         }

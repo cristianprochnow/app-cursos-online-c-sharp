@@ -1,4 +1,5 @@
 using CursosOnline.Test._Utils;
+using CursosOnline.Test._Builders;
 
 namespace CursosOnline.Test
 {
@@ -9,6 +10,7 @@ namespace CursosOnline.Test
         private string _publico;
         private double _valor;
         private string _descricao;
+        private double _nota;
 
         /**
          * Numa classe normal, o construtor sempre � chamado apenas uma vez, no momento
@@ -33,6 +35,7 @@ namespace CursosOnline.Test
             _descricao = "Aula essencial para usufruir de testes";
             _publico = "Professor";
             _valor = 150.00;
+            _nota = 8;
         }
 
         /**
@@ -72,10 +75,11 @@ namespace CursosOnline.Test
                  * espec�fico.
                  */
                 CargaHoraria = _cargaHoraria,
-                Valor = _valor
+                Valor = _valor,
+                Nota = _nota
             };
 
-            Curso novoCurso = new Curso(curso.Name, curso.Descricao, curso.CargaHoraria, curso.Publico, curso.Valor);
+            Curso novoCurso = new Curso(curso.Name, curso.Descricao, curso.CargaHoraria, curso.Publico, curso.Valor, curso.Nota);
 
             /**
              * Feito assim pois as boas pr�ticas recomendam ter apenas um Assert por
@@ -109,7 +113,7 @@ namespace CursosOnline.Test
              * (iguais mesma).
              */
             Assert.Throws<ArgumentException>(
-                () => new Curso(nome, _descricao, _cargaHoraria, _publico, _valor)
+                () => CursoBuilder.Novo().ComNome(nome).Criar()
             );
         }
 
@@ -124,7 +128,9 @@ namespace CursosOnline.Test
              * o programador a colocar a mensagem correta que eu quero.
              */
             Assert
-                .Throws<ArgumentException>(() => new Curso(_nome, _descricao, cargaHoraria, _publico, _valor))
+                .Throws<ArgumentException>(
+                    () => CursoBuilder.Novo().ComCargaHoraria(cargaHoraria).Criar()
+                )
                 /**
                  * `ComMensagem` recebe como primeiro par�metro a liga��o com a classe
                  * de exception, mas j� que ele est� usando o m�todo encadeado, ent�o o par�metro
@@ -132,6 +138,22 @@ namespace CursosOnline.Test
                  * por causa do encadeamento.
                  */
                 .ComMensagem("Valor inv�lido para Carga Hor�ria!");
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        public void CursoNotaInvalida(int nota)
+        {
+            /**
+             * � tamb�m poss�vel verificar a mensagem de erro devolvida
+             * em cada exception. Com isso, por exemplo, estou obrigando
+             * o programador a colocar a mensagem correta que eu quero.
+             */
+            Assert
+                .Throws<ArgumentException>(
+                    () => CursoBuilder.Novo().ComNota(nota).Criar()
+                )
+                .ComMensagem("Nota Inválida!");
         }
     }
 
@@ -144,8 +166,9 @@ namespace CursosOnline.Test
         private string publico;
         private double valor;
         private double valorDesconto;
+        private double nota;
 
-        public Curso(string name, string descricao, double cargaHoraria, string publico, double valor)
+        public Curso(string name, string descricao, double cargaHoraria, string publico, double valor, double nota)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -155,6 +178,9 @@ namespace CursosOnline.Test
             {
                 throw new ArgumentException("Valor inv�lido para Carga Hor�ria!");
             }
+            if (nota < 0) {
+                throw new ArgumentException("Nota Inválida!");
+            }
 
             this.Name = name;
             this.CargaHoraria = cargaHoraria;
@@ -162,6 +188,7 @@ namespace CursosOnline.Test
             this.Publico = publico;
             this.Valor = valor;
             this.valorDesconto = 10;
+            this.Nota = nota;
         }
 
         // E aqui temos as propriedades, que servem mais para a representa��o e manipula��o de valores.
@@ -178,6 +205,7 @@ namespace CursosOnline.Test
          * ganhar valor.
          */
         public double Valor { get => valor; set => valor = value; }
+        public double Nota { get => nota; set => nota = value; }
 
         /**
          * Al�m disso, em cada um dos m�todos, � poss�vel passar um processamento personalizado,

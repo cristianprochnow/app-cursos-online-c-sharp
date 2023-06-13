@@ -2,14 +2,14 @@
 {
     public class Curso
     {
-        private string name;
-        private string descricao;
+        private string? name;
+        private string? descricao;
         private double cargaHoraria;
-        private string publico;
+        private string? publico;
         private double valor;
         private double valorDesconto;
 
-        public Curso(string name, string descricao, double cargaHoraria, string publico, double valor)
+        public Curso(string? name, string? descricao, double cargaHoraria, string? publico, double valor)
         {
             if (string.IsNullOrEmpty(name))
             {
