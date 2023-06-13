@@ -1,4 +1,4 @@
-using CursosOnline.Test._Util;
+using CursosOnline.Test._Utils;
 
 namespace CursosOnline.Test
 {
