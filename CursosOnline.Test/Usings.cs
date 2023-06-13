@@ -1,2 +1,2 @@
 global using Xunit;
-using ExpectedObjects;
+global using ExpectedObjects;
