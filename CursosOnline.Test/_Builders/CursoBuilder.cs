@@ -1,3 +1,5 @@
+using CursosOnline.Domain;
+
 /*
 Esse é um padrão de projeto, para evitar exatamente os problemas
 relacionados com a inserção de novas propriedades em projetos que já

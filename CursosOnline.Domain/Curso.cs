@@ -2,14 +2,16 @@
 {
     public class Curso
     {
-        private string? name;
-        private string? descricao;
+        // Estes s�o os "campos", que possuem representa��o apenas na classe
+        private string name;
+        private string descricao;
         private double cargaHoraria;
-        private string? publico;
+        private string publico;
         private double valor;
         private double valorDesconto;
+        private double nota;
 
-        public Curso(string? name, string? descricao, double cargaHoraria, string? publico, double valor)
+        public Curso(string name, string descricao, double cargaHoraria, string publico, double valor, double nota)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -19,6 +21,9 @@
             {
                 throw new ArgumentException("Valor inv�lido para Carga Hor�ria!");
             }
+            if (nota < 0) {
+                throw new ArgumentException("Nota Inválida!");
+            }
 
             this.Name = name;
             this.CargaHoraria = cargaHoraria;
@@ -26,6 +31,7 @@
             this.Publico = publico;
             this.Valor = valor;
             this.valorDesconto = 10;
+            this.Nota = nota;
         }
 
         // E aqui temos as propriedades, que servem mais para a representa��o e manipula��o de valores.
@@ -42,6 +48,7 @@
          * ganhar valor.
          */
         public double Valor { get => valor; set => valor = value; }
+        public double Nota { get => nota; set => nota = value; }
 
         /**
          * Al�m disso, em cada um dos m�todos, � poss�vel passar um processamento personalizado,
