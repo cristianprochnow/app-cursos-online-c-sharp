@@ -6,11 +6,11 @@ namespace CursosOnline.Test
 {
     public class CursoTeste
     {
-        private string _nome;
+        private string? _nome;
         private double _cargaHoraria;
-        private string _publico;
+        private string? _publico;
         private double _valor;
-        private string _descricao;
+        private string? _descricao;
         private double _nota;
 
         /**
@@ -29,6 +29,8 @@ namespace CursosOnline.Test
             _valor = valor;
         }
         */
+        /* Agora tudo isso é desnecessário, já que o Builer faz o papel.
+
         public CursoTeste()
         {
             _nome = "Teste de Software";
@@ -38,6 +40,7 @@ namespace CursosOnline.Test
             _valor = 150.00;
             _nota = 8;
         }
+        */
 
         /**
          * Criar Curso
@@ -63,9 +66,9 @@ namespace CursosOnline.Test
              */
             var curso = new
             {
-                Name = _nome,
-                Publico = _publico,
-                Descricao = _descricao,
+                Name = "Teste de Software",
+                Publico = "Universitários",
+                Descricao = "Curso para iniciantes em Testes",
                 /**
                  * Usada a convers�o de `double`, pois
                  * j� que n�o h� identifica��o de tipo,
@@ -75,9 +78,9 @@ namespace CursosOnline.Test
                  * ent�o temos que identificar o tipo
                  * espec�fico.
                  */
-                CargaHoraria = _cargaHoraria,
-                Valor = _valor,
-                Nota = _nota
+                CargaHoraria = 80.0,
+                Valor = 1800.50,
+                Nota = 8.0
             };
 
             Curso novoCurso = new Curso(curso.Name, curso.Descricao, curso.CargaHoraria, curso.Publico, curso.Valor, curso.Nota);

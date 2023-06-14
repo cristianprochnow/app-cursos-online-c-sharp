@@ -3,10 +3,10 @@
     public class Curso
     {
         // Estes s�o os "campos", que possuem representa��o apenas na classe
-        private string name;
-        private string descricao;
+        private string? name;
+        private string? descricao;
         private double cargaHoraria;
-        private string publico;
+        private string? publico;
         private double valor;
         private double valorDesconto;
         private double nota;
@@ -35,14 +35,14 @@
         }
 
         // E aqui temos as propriedades, que servem mais para a representa��o e manipula��o de valores.
-        public string Name { get => name; set => name = value; }
-        public string Descricao { get => descricao; set => descricao = value; }
+        public string Name { get => (name != null ? name : ""); set => name = value; }
+        public string Descricao { get => (descricao != null ? descricao : ""); set => descricao = value; }
         /**
          * Nesse caso, quando temos tanto o get quanto set, podemos dar valor � vari�vel e tamb�m
          * ler o que est� dentro dela.
          */
         public double CargaHoraria { get => cargaHoraria; set => cargaHoraria = value; }
-        public string Publico { get => publico; set => publico = value; }
+        public string Publico { get => (publico != null ? publico : ""); set => publico = value; }
         /**
          * A propriedade pode tamb�m ter apenas um ou outro. Ou seja, apenas ser lida ou apenas
          * ganhar valor.
