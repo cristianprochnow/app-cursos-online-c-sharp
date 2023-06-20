@@ -1,5 +1,6 @@
 using CursosOnline.Test._Utils;
 using CursosOnline.Test._Builders;
+using Bogus;
 using CursosOnline.Domain;
 
 namespace CursosOnline.Test
@@ -12,6 +13,13 @@ namespace CursosOnline.Test
         private double _valor;
         private string? _descricao;
         private double _nota;
+
+        public string Nome { get => (_nome != null ? _nome : ""); set => _nome = value; }
+        public double CargaHoraria { get => _cargaHoraria; set => _cargaHoraria = value; }
+        public string Publico { get => (_publico != null ? _publico : ""); set => _publico = value; }
+        public double Valor { get => _valor; set => _valor = value; }
+        public string Descricao { get => (_descricao != null ? _descricao : ""); set => _descricao = value; }
+        public double Nota { get => _nota; set => _nota = value; }
 
         /**
          * Numa classe normal, o construtor sempre � chamado apenas uma vez, no momento
@@ -52,6 +60,25 @@ namespace CursosOnline.Test
          * 3. Todos os campos s�o de preenchimento obrigat�rio.
          * 14. Cada curso PODE ter uma descrição
          */
+
+        public CursoTeste()
+        {
+            List<string> publicos = new List<string>();
+            publicos.Add("Universitários");
+            publicos.Add("Professores");
+            publicos.Add("Estagiários");
+            publicos.Add("Bolsistas");
+            publicos.Add("Estudantes");
+
+            Faker faker = new Faker();
+
+            this.Nome = faker.Random.Words(3);
+            this.Descricao = faker.Lorem.Sentence();
+            this.CargaHoraria = faker.Random.Double(1, 100);
+            this.Publico = faker.Random.ListItem(publicos);
+            this.Valor = faker.Random.Double(1, 150);
+            this.Nota = faker.Random.Double();
+        }
 
         [Fact]
         public void CriarCurso()
